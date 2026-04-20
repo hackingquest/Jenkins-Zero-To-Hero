@@ -5,10 +5,13 @@ pipeline {
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
     }
   }
-  tools {
-    // for jdk version update
-    jdk 'Java17'
-     }
+  environment {
+        // Pointing to paths INSIDE the container, NOT the EC2 host
+        JAVA_HOME = '/opt/java/openjdk'
+        MAVEN_HOME = '/usr/share/maven' 
+        PATH = "${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${env.PATH}"
+    }
+  
   stages {
     stage('Checkout') {
       steps {
@@ -16,6 +19,7 @@ pipeline {
         //git branch: 'main', url: 'https://github.com/hackingquest/Jenkins-Zero-To-Hero.git'
       }
     }
+    
     stage('Build and Test') {
       steps {
         sh 'ls -ltr'
