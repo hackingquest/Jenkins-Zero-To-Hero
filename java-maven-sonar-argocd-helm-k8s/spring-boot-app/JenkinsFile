@@ -7,7 +7,7 @@ pipeline {
     }
   }
   tools {
-    // for jdk version setuo
+    // for jdk version
     jdk 'Java17'
      }
   stages {
