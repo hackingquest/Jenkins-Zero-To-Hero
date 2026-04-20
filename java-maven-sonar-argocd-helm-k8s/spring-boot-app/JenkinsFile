@@ -1,6 +1,7 @@
 pipeline {
   agent {
     tools {
+    // for jdk version setuo
     jdk 'Java17'
      }
     docker {
