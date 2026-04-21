@@ -32,7 +32,7 @@ The above maven target stroes the artifacts to the `target` directory. You can e
 java -jar target/spring-boot-web.jar
 ```
 
-### The Docker way
+### The Docker way to run locally
 
 Build the Docker Image
 
