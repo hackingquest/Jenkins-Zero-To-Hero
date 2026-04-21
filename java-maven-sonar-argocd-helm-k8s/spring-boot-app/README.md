@@ -49,7 +49,7 @@ Hurray !! Access the application on `http://<ip-address>:8010`
 
 ## Next Steps
 
-### Configure a Sonar Server locally
+### Configure a Sonar Server locally for test
 
 ```
 System Requirements
