@@ -1,5 +1,10 @@
 pipeline {
-  agent none
+  agent {
+    docker {
+      image 'maven:3.9.6-eclipse-temurin-17'
+      args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+    }
+  }
   environment {
         // Pointing to paths INSIDE the container, NOT the EC2 host
         JAVA_HOME = '/opt/java/openjdk'
@@ -8,9 +13,7 @@ pipeline {
     }
   
   stages {
-    
     stage('Checkout') {
-      agent any
       steps {
         sh 'echo passed'
         //git branch: 'main', url: 'https://github.com/hackingquest/Jenkins-Zero-To-Hero.git'
@@ -18,12 +21,6 @@ pipeline {
     }
     
     stage('Build and Test') {
-       agent {
-          docker {
-            image 'maven:3.9.6-eclipse-temurin-17'
-            args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
-          }
-      }
       steps {
         sh 'ls -ltr'
         // build the project and create a JAR file
@@ -31,12 +28,6 @@ pipeline {
       }
     }
     stage('Static Code Analysis') {
-        agent {
-         docker {
-           image 'maven:3.9.6-eclipse-temurin-17'
-           args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
-         }
-      }
       environment {
         SONAR_URL = "http://16.176.146.112:9000"
       }
@@ -47,7 +38,6 @@ pipeline {
       }
     }
     stage('Build and Push Docker Image') {
-      agent any
       environment {
         DOCKER_IMAGE = "hackerpro25/ultimate-cicd:${BUILD_NUMBER}"
         // DOCKERFILE_LOCATION = "java-maven-sonar-argocd-helm-k8s/spring-boot-app/Dockerfile"
@@ -64,7 +54,6 @@ pipeline {
       }
     }
     stage('Update Deployment File') {
-       agent any
         environment {
             GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
             GIT_USER_NAME = "hackingquest"
