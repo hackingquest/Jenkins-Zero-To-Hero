@@ -8,6 +8,7 @@ pipeline {
     }
   
   stages {
+    agent none
     stage('Checkout') {
       steps {
         sh 'echo passed'
