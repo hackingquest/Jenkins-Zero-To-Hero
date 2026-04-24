@@ -1,5 +1,5 @@
 pipeline {
-  
+  agent none
   environment {
         // Pointing to paths INSIDE the container, NOT the EC2 host
         JAVA_HOME = '/opt/java/openjdk'
