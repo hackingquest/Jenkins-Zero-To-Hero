@@ -17,7 +17,7 @@ pipeline {
       }
       steps {
         sh 'echo passed'
-        //git branch: 'main', url: 'https://github.com/hackingquest/Jenkins-Zero-To-Hero.git'
+        git branch: 'main', url: 'https://github.com/hackingquest/Jenkins-Zero-To-Hero.git'
       }
     }
     
