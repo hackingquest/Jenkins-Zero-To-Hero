@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: spring-boot-app
-        image: hackingquest/ultimate-cicd:88
+        image: hackingquest/ultimate-cicd:89
         ports:
         - containerPort: 8080
