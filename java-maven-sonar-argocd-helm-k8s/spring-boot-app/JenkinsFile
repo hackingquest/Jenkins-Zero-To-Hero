@@ -75,22 +75,27 @@ pipeline {
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
-                    git config --global user.email "veda51sri@gmail.com"
-                    git config --global user.name "hackingquest"
-                    BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
-                     
-                    git config --global --add safe.directory /var/lib/jenkins/workspace/first_pipeline
-                    git checkout main || git checkout -b main
-                    git add java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
-                     # 3. Check if there are actually changes to commit (prevents pipeline failure if no change)
-                     if ! git diff-index --quiet HEAD; then
-                       git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                       # 4. Push back to your repository
-                       git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
-                     else
-                       echo "No changes detected in deployment.yml, skipping commit."
-                     fi  
+                  # Basic Git Setup
+                  git config --global user.email "veda51sri@gmail.com"
+                  git config --global user.name "hackingquest"
+                  git config --global --add safe.directory /var/lib/jenkins/workspace/first_pipeline
+                  
+                  # Ensure we are on the branch
+                  git checkout main || git checkout -b main
+      
+                  # Update the image line regardless of what the old image name was
+                  sed -i "s|image: .*|image: hackingquest/ultimate-cicd:${BUILD_NUMBER}|g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+      
+                  # Stage and Commit
+                  git add java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+                  
+                  if ! git diff-index --quiet HEAD; then
+                    git commit -m "Update deployment image to version ${BUILD_NUMBER}"
+                    # Push using the token for authentication
+                    git push https://${GITHUB_TOKEN}@://github.com HEAD:main
+                  else
+                    echo "No changes detected in deployment.yml, skipping commit."
+                  fi  
                 '''
             }
         }
