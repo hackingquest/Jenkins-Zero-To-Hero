@@ -78,7 +78,7 @@ pipeline {
                     git config --global user.email "veda51sri@gmail.com"
                     git config --global user.name "hackingquest"
                     BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i "s|abhishekf5/ultimate-cicd:[0-9]*|hackingquest/ultimate-cicd:${BUILD_NUMBER}|g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
                      
                     git config --global --add safe.directory /var/lib/jenkins/workspace/first_pipeline
                     git checkout main || git checkout -b main
