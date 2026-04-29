@@ -92,7 +92,7 @@ pipeline {
                   if ! git diff-index --quiet HEAD; then
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     # Push using the token for authentication
-                    git push https://${GITHUB_TOKEN}@://github.com HEAD:main
+                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                   else
                     echo "No changes detected in deployment.yml, skipping commit."
                   fi  
