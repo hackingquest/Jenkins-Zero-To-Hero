@@ -53,7 +53,7 @@ Hurray !! Access the application on `http://<ip-address>:8010`
 
 ```
 System Requirements
-Java 17+ (Oracle JDK, OpenJDK, or AdoptOpenJDK) need java 17 for sonarqube and java 21 for jenkins running
+Java 17+ (Oracle JDK, OpenJDK, or AdoptOpenJDK) need java 17 for sonarqube and java 21 for jenkins running to update use sudo update-alternatives --config java
 Hardware Recommendations:
    Minimum 2 GB RAM
    2 CPU cores
