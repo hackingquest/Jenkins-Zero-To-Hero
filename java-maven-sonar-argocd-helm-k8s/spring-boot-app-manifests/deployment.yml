@@ -17,7 +17,8 @@ spec:
       containers:
       - name: spring-boot-app
         image: hackingquest/ultimate-cicd:141
-        imagePullSecrets:
-      - name: regcred
+        
         ports:
         - containerPort: 8080
+      imagePullSecrets:
+      - name: regcred
