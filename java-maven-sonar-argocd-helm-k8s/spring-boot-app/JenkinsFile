@@ -82,7 +82,7 @@ pipeline {
                   
                   # Ensure we are on the branch
                   git checkout main || git checkout -b main
-      
+                  git pull https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} main --rebase
                   # Update the image line regardless of what the old image name was
                   sed -i "s|image: .*|image: hackerpro25/ultimate-cicd:${BUILD_NUMBER}|g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
       
@@ -91,7 +91,7 @@ pipeline {
                   
                   if ! git diff-index --quiet HEAD; then
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                    git pull https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} main --rebase
+                    
                     # Push using the token for authentication
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                   else
