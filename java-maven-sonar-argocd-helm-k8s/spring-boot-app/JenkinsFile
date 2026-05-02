@@ -32,7 +32,7 @@ pipeline {
     stage('Static Code Analysis') {
           
       environment {
-        SONAR_URL = "http://52.64.226.98:9000"
+        SONAR_URL = "http://3.25.113.187:9000"
       }
       steps {
         withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
@@ -84,7 +84,7 @@ pipeline {
                   git checkout main || git checkout -b main
       
                   # Update the image line regardless of what the old image name was
-                  sed -i "s|image: .*|image: hackingquest/ultimate-cicd:${BUILD_NUMBER}|g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+                  sed -i "s|image: .*|image: hackerpro25/ultimate-cicd:${BUILD_NUMBER}|g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
       
                   # Stage and Commit
                   git add java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
