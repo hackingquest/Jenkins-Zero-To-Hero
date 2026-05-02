@@ -82,6 +82,8 @@ pipeline {
                   
                   # Ensure we are on the branch
                   git checkout main || git checkout -b main
+                  git rebase --abort ||true
+                  rm -rf .git/rebase-merge ||true
                   git pull https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} main --rebase
                   # Update the image line regardless of what the old image name was
                   sed -i "s|image: .*|image: hackerpro25/ultimate-cicd:${BUILD_NUMBER}|g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
